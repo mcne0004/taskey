@@ -4,21 +4,19 @@ namespace Framework;
 
 class Kernel
 {
+    private Router $router;
     public function __construct()
     {
+        $this->router = new Router();
     }
 
     public function handle(Request $request): Response
     {
-        $queryParametersString = implode('<br>  ', $request->queryParameters);
-        $postParametersString = implode('<br>  ', $request->postParameters);
-        return new Response(
-            "Request method: $request->method<br>
-                Requested path: $request->path<br>
-                Query parameters:<br>
-                  $queryParametersString<br>
-                Post parameters:<br>
-                  $postParametersString"
-        );
+        return $this->router->dispatch($request);
+    }
+
+    public function registerRoutes(RouteProviderInterface $routeProvider): void
+    {
+        $routeProvider->register($this->router);
     }
 }

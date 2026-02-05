@@ -4,8 +4,12 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Framework\Kernel;
 use Framework\Request;
+use App\RouteProvider;
+
+$routeProvider = new RouteProvider();
 
 $kernel = new Kernel();
+$kernel->registerRoutes($routeProvider);
 
 $urlPath = parse_url($_SERVER['REQUEST_URI'], component: PHP_URL_PATH);
 if (!is_string($urlPath)) {
