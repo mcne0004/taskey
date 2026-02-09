@@ -19,3 +19,9 @@ if ($argv[1] === 'deptrac') {
 if ($argv[1] === 'fix') {
     passthru('php vendor/bin/phpcbf');
 }
+
+if ($argv[1] === 'check') {
+    passthru('php vendor/bin/phpstan --ansi');
+    passthru('php vendor/bin/phpcs --colors');
+    passthru('php vendor/bin/deptrac --ansi');
+}

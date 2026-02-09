@@ -5,9 +5,11 @@ namespace Framework;
 class Kernel
 {
     private Router $router;
+    private ServiceContainer $serviceContainer;
     public function __construct()
     {
         $this->router = new Router();
+        $this->serviceContainer = new ServiceContainer();
     }
 
     public function handle(Request $request): Response
@@ -17,6 +19,11 @@ class Kernel
 
     public function registerRoutes(RouteProviderInterface $routeProvider): void
     {
-        $routeProvider->register($this->router);
+        $routeProvider->register($this->router, $this->serviceContainer);
+    }
+
+    public function registerServices(ServiceProviderInterface $serviceProvider): void
+    {
+        $serviceProvider->register($this->serviceContainer);
     }
 }
