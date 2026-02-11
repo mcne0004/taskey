@@ -3,15 +3,21 @@
 namespace App\Controllers;
 
 use Framework\Response;
+use Framework\ResponseFactory;
 
 class HomeController
 {
+    private ResponseFactory $responseFactory;
+    public function __construct(ResponseFactory $responseFactory)
+    {
+        $this->responseFactory = $responseFactory;
+    }
     public function index(): Response
     {
-        return new Response('Welcome to Taskey', responseCode: 200);
+        return $this->responseFactory->body('Welcome to Taskey');
     }
     public function about(): Response
     {
-        return new Response('Taskey is a task management application; right there in your browser.', responseCode: 200);
+        return $this->responseFactory->body('Taskey is a task management application; right there in your browser.');
     }
 }

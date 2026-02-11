@@ -4,13 +4,15 @@ namespace Framework;
 
 class Router
 {
+    public ResponseFactory $responseFactory;
     /**
      * @var array<Route>
      */
     public array $routes;
 
-    public function __construct()
+    public function __construct(ResponseFactory $responseFactory)
     {
+        $this->responseFactory = $responseFactory;
     }
 
     public function dispatch(Request $request): Response
@@ -23,7 +25,7 @@ class Router
             }
         }
         if ($routeMatch === null) {
-            return new Response('Page not found');
+            return $this->responseFactory->notFound();
         }
         $callback = $routeMatch->callback;
 
